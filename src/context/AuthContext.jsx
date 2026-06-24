@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { useContext, createContext, useState } from "react";
+
 export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
@@ -9,7 +10,6 @@ export default function AuthProvider({ children }) {
   );
 
   function signup(email, password) {
-    console.log("signup called with email:", email, "and password:", password);
     const users = JSON.parse(localStorage.getItem("users")) || [];
     if (users && users.find((user) => user.email === email)) {
       return { success: false, message: "User already exists" };
@@ -27,7 +27,10 @@ export default function AuthProvider({ children }) {
 
   function login(email, password) {
     const users = JSON.parse(localStorage.getItem("users"));
-    if (users && users.find((user) => user.email === email && user.password === password)) {
+    if (
+      users &&
+      users.find((user) => user.email === email && user.password === password)
+    ) {
       localStorage.setItem("currentUserEmail", email);
       setUser({ email });
       return { success: true };
@@ -46,4 +49,8 @@ export default function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
+}
+
+export function useAuth() {
+  return useContext(AuthContext);
 }

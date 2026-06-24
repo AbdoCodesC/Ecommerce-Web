@@ -273,6 +273,7 @@ body {
   color: #007bff;
   text-decoration: none;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .auth-link:hover {
@@ -462,10 +463,12 @@ body {
 .btn-primary {
   background-color: #007bff;
   color: #fff;
+  cursor: pointer;
 }
 
 .btn-primary:hover {
   background-color: #0056b3;
+  cursor: pointer;
 }
 
 .btn-secondary {

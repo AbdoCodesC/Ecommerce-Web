@@ -2,13 +2,12 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { set, useForm } from "react-hook-form";
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext.jsx";
 import { useNavigate } from "react-router";
+import { useAuth } from "../context/AuthContext.jsx";
 
 function Auth() {
   const [mode, setMode] = useState("signup");
-  const { signup, user, logout, login } = useContext(AuthContext);
+  const { signup, user, logout, login } = useAuth();
   const [error, setError] = useState(null);
   const Navigate = useNavigate();
   const {
@@ -41,10 +40,6 @@ function Auth() {
     <div className="page">
       <div className="container">
         <div className="auth-container">
-          {user && <p>User logged in: {user.email}</p>}
-          <button className="btn btn-secondary" onClick={logout}>
-            logout
-          </button>
           <h1 className="page-title">
             {mode === "signup" ? "Sign Up" : "Login"}
           </h1>
