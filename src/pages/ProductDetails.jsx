@@ -5,12 +5,14 @@ import { getProductById } from "../data/products";
 import NotFound from "./NotFound";
 import { useNavigate } from "react-router-dom";
 import { set } from "react-hook-form";
+import { useCart } from "../context/CartContext";
 
 function ProductDetails() {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
+  const { addToCart, cartItems } = useCart();
 
   useEffect(() => {
     setIsLoading(true);
@@ -23,6 +25,12 @@ function ProductDetails() {
     setProduct(product);
     setIsLoading(false);
   }, [id, navigate]);
+
+  let productQuantityLabel = null;
+  if (product) {
+    const productInCart = cartItems.find((item) => product.id === item.id);
+    productQuantityLabel = productInCart ? `(${productInCart.quantity})` : null;
+  }
 
   return (
     <div className="page">
@@ -42,7 +50,12 @@ function ProductDetails() {
               <p className="product-detail-description">
                 {product?.description}
               </p>
-              <button className="btn btn-primary">Add to Cart</button>
+              <button
+                className="btn btn-primary"
+                onClick={() => addToCart(product?.id)}
+              >
+                Add to Cart {productQuantityLabel}
+              </button>
             </div>
           </div>
         </div>
